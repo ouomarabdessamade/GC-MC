@@ -2,11 +2,11 @@ import numpy as np
 import random as rd
 import scipy.sparse as sp
 from time import time
-# import pandas as pd
 
-import pickle
+
 np.random.seed(1)
 rd.seed(1)
+
 class Data(object):
     def __init__(self, path, batch_size):
 
@@ -42,17 +42,6 @@ class Data(object):
                     self.n_items = max(self.n_items, max(items))
                     self.n_users = max(self.n_users, uid)
                     self.n_train += len(items)
-
-        #with open(valid_file) as f:
-         #   for l in f.readlines():
-          #      if len(l) > 0:
-           #         l = l.strip('\n')
-            #        try:
-                      #  items = [int(i) for i in l.split(' ')[1:]]
-                    #except Exception:
-                     #   continue
-                    #self.n_items = max(self.n_items, max(items))
-                    #self.n_valid += len(items)
 
         with open(test_file) as f:
             for l in f.readlines():
