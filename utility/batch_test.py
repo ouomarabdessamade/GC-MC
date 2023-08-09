@@ -1,9 +1,3 @@
-'''
-Created on Oct 10, 2018
-Tensorflow Implementation of Neural Graph Collaborative Filtering (NGCF) model in:
-Wang Xiang et al. Neural Graph Collaborative Filtering. In SIGIR 2019.
-@author: Xiang Wang (xiangwang@u.nus.edu)
-'''
 import utility.metrics as metrics
 from utility.parser import parse_args
 from utility.load_data import *
@@ -76,12 +70,11 @@ def get_performance(user_pos_test, r, auc, Ks):
         precision.append(metrics.precision_at_k(r, K))
         recall.append(metrics.recall_at_k(r, K, len(user_pos_test)))
         ndcg.append(metrics.ndcg_at_k(len(user_pos_test), r, K))
-        hit_ratio.append(metrics.hit_at_k(r, K))
 
     return {'recall': np.array(recall), 'precision': np.array(precision),
-            'ndcg': np.array(ndcg), 'hit_ratio': np.array(hit_ratio), 'auc': auc}
+            'ndcg': np.array(ndcg),  'auc': auc}
 
-"""
+
 def valid_one_user(x):
     # user u's ratings for user u
     rating = x[0]
@@ -105,7 +98,7 @@ def valid_one_user(x):
         r, auc = ranklist_by_sorted(user_pos_test, test_items, rating, Ks)
 
     return get_performance(user_pos_test, r, auc, Ks)
-"""
+
 def test_one_user(x):
     # user u's ratings for user u
     rating = x[0]
@@ -133,8 +126,7 @@ def test_one_user(x):
 
 
 def test(sess, model, users_to_test, is_valid=False, drop_flag=False, batch_test_flag=False):
-    result = {'precision': np.zeros(len(Ks)), 'recall': np.zeros(len(Ks)), 'ndcg': np.zeros(len(Ks)),
-              'hit_ratio': np.zeros(len(Ks)), 'auc': 0.}
+    result = {'precision': np.zeros(len(Ks)), 'recall': np.zeros(len(Ks)), 'ndcg': np.zeros(len(Ks)), 'auc': 0.}
 
     pool = multiprocessing.Pool(cores)
 
@@ -202,7 +194,6 @@ def test(sess, model, users_to_test, is_valid=False, drop_flag=False, batch_test
             result['precision'] += re['precision']/n_test_users
             result['recall'] += re['recall']/n_test_users
             result['ndcg'] += re['ndcg']/n_test_users
-            result['hit_ratio'] += re['hit_ratio']/n_test_users
             result['auc'] += re['auc']/n_test_users
 
 
