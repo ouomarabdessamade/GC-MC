@@ -175,10 +175,10 @@ if __name__ == '__main__':
                 print(perf_str)
             continue
 
+        #-----------------------Test---------------
         t2 = time()
-        users_to_valid = list(data_generator.valid_set.keys())
-        ret = test(sess, model, users_to_valid, is_valid=True, drop_flag=True)
-
+        users_to_test = list(data_generator.test_set.keys())
+        ret = test(sess, model, users_to_test, is_valid=False, drop_flag=True)
         t3 = time()
 
         loss_loger.append(loss)
@@ -186,17 +186,11 @@ if __name__ == '__main__':
         pre_loger.append(ret['precision'])
         ndcg_loger.append(ret['ndcg'])
 
-        '''
-            save model with the best recall@20 under validation set
-        '''
-        # if cur_best_pre_0 < ret['recall'][0]:
-        #     save_saver.save(sess, weights_save_path + '/weights', global_step=epoch)
-        #     print('save the weights in path: ', weights_save_path)
-        #     # tf.saved_model.save(model, model_folder)
+        
             
         if args.verbose > 0:
-            perf_str = 'Validation -- Epoch %d [%.1fs + %.1fs]: train==[%.5f], recall=[%.5f], ' \
-                       'precision=[%.5f], ndcg=[%.5f]' % \
+            perf_str = f'Test -- Epoch %d [%.1fs + %.1fs]: train==[%.5f], recall=[%.5f], ' \
+                       f'precision=[%.5f], ndcg=[%.5f]' % \
                        (epoch, t2 - t1, t3 - t2, loss,
                         '\t'.join(['%.5f' % r for r in ret['recall']]),
                          '\t'.join(['%.5f' % r for r in ret['precision']]),
