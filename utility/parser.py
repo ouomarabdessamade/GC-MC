@@ -1,6 +1,3 @@
-'''
-Deoscillated Graph Collaborative Filtering
-'''
 import argparse
 
 def parse_args():
@@ -13,7 +10,7 @@ def parse_args():
                         help='Project path.')
 
     parser.add_argument('--dataset', nargs='?', default='gowalla',
-                        help='Choose a dataset from {ml100k, ratings_ml-1m, gowalla}')
+                        help='Choose a dataset from {yelp2018, gowalla}')
     parser.add_argument('--pretrain', type=int, default=0,
                         help='0: No pretrain, -1: Pretrain with the learned embeddings, 1:Pretrain with stored models.')
     parser.add_argument('--verbose', type=int, default=1,
@@ -23,7 +20,7 @@ def parse_args():
     parser.add_argument('--residual', type=str, default='None', help='deprecated')
     parser.add_argument('--n_fold', type=int, default=100, help='the number of folds for splitting adj')
 
-    parser.add_argument('--embed_size', type=int, default=128,
+    parser.add_argument('--embed_size', type=int, default=64,
                         help='Embedding size.')
     parser.add_argument('--layer_num', type=int, default=None,
                         help='The number of layers')
@@ -68,7 +65,7 @@ def parse_args():
     parser.add_argument('--mess_dropout', nargs='?', default='[0.1]',
                         help='Keep probability w.r.t. message dropout (i.e., 1-dropout_ratio) for each deep layer. 1: no dropout.')
 
-    parser.add_argument('--Ks', nargs='?', default='[20]',
+    parser.add_argument('--Ks', nargs='?', default='[10,20,30,40,50]',
                         help='Output sizes of every layer')
 
     parser.add_argument('--save_flag', type=int, default=1,
