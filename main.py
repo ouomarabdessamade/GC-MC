@@ -50,7 +50,7 @@ if __name__ == '__main__':
     else:
         pretrain_data = None
 
-    model = LightGCN(data_config=config, pretrain_data=pretrain_data)
+    model = GCMC(data_config=config, pretrain_data=pretrain_data)
 
     """
     *********************************************************
@@ -142,7 +142,7 @@ if __name__ == '__main__':
     *********************************************************
     Train.
     """
-    loss_loger, pre_loger, rec_loger, ndcg_loger = [], [], [], [], []
+    loss_loger, pre_loger, rec_loger, ndcg_loger = [], [], [], []
     stopping_step = 0
     should_stop = False
 
@@ -167,8 +167,8 @@ if __name__ == '__main__':
             print('ERROR: loss is nan.')
             sys.exit()
 
-        # print the validation evaluation metrics each 10 epochs; pos:neg = 1:10.
-        if (epoch + 1) % 1 != 0:
+        # print the evaluation metrics each 10 epochs; pos:neg = 1:10.
+        if (epoch) % 10 != 0:
             if args.verbose > 0 and epoch % args.verbose == 0:
                 perf_str = 'Epoch %d [%.1fs]: train==[%.5f]' % (
                     epoch, time() - t1, loss)
@@ -176,6 +176,9 @@ if __name__ == '__main__':
             continue
 
         #-----------------------Test---------------
+        perf_str = 'Epoch %d [%.1fs]: train==[%.5f]' % (
+                    epoch, time() - t1, loss)
+        print(perf_str)
         t2 = time()
         users_to_test = list(data_generator.test_set.keys())
         ret = test(sess, model, users_to_test, is_valid=False, drop_flag=True)
@@ -189,14 +192,11 @@ if __name__ == '__main__':
         
             
         if args.verbose > 0:
-            perf_str = f'Test -- Epoch %d [%.1fs + %.1fs]: train==[%.5f], recall=[%.5f], ' \
-                       f'precision=[%.5f], ndcg=[%.5f]' % \
-                       (epoch, t2 - t1, t3 - t2, loss,
-                        '\t'.join(['%.5f' % r for r in ret['recall']]),
-                         '\t'.join(['%.5f' % r for r in ret['precision']]),
-                         '\t'.join(['%.5f' % r for r in ret['ndcg']]))
-            print(perf_str)
-
+               perf_str = " Test : recall=[%s], precision=[%s], ndcg=[%s]"% \
+                    ('\t'.join(['%.5f' % r for r in ret['recall']]),
+                     '\t'.join(['%.5f' % r for r in ret['precision']]),
+                     '\t'.join(['%.5f' % r for r in ret['ndcg']]))
+               print(perf_str)
         cur_best_pre_0, stopping_step, should_stop = early_stopping(ret['recall'][0], cur_best_pre_0,
                                                                     stopping_step, expected_order='acc', flag_step=50)
 
