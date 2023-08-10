@@ -168,7 +168,7 @@ if __name__ == '__main__':
             sys.exit()
 
         # print the evaluation metrics each 10 epochs; pos:neg = 1:10.
-        if (epoch) % 10 != 0:
+        if (epoch) % 20 != 0:
             if args.verbose > 0 and epoch % args.verbose == 0:
                 perf_str = 'Epoch %d [%.1fs]: train==[%.5f]' % (
                     epoch, time() - t1, loss)
