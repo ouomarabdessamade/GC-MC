@@ -192,7 +192,7 @@ if __name__ == '__main__':
         
             
         if args.verbose > 0:
-               perf_str = " Test : recall=[%s], precision=[%s], ndcg=[%s]"% \
+               perf_str = " Test :\nrecall=[%s], precision=[%s], ndcg=[%s]"% \
                     ('\t'.join(['%.5f' % r for r in ret['recall']]),
                      '\t'.join(['%.5f' % r for r in ret['precision']]),
                      '\t'.join(['%.5f' % r for r in ret['ndcg']]))
@@ -234,8 +234,8 @@ if __name__ == '__main__':
         ret = test(sess, model, users_to_test, is_valid=False, drop_flag=True)
         # cur_best_pre_0 = ret['recall'][0]
 
-        final_perf = '******* Best validation model recall=[%.5f], precision=[%.5f], ndcg=[%.5f]' % \
-                        ('\t'.join(['%.5f' % r for r in ret['recall']]),
+        final_perf = 'Best validation model \nrecall=[%s], precision=[%s], ndcg=[%s]"% \
+                         ('\t'.join(['%.5f' % r for r in ret['recall']]),
                          '\t'.join(['%.5f' % r for r in ret['precision']]),
                          '\t'.join(['%.5f' % r for r in ret['ndcg']]))
         print(final_perf)
