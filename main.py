@@ -234,10 +234,10 @@ if __name__ == '__main__':
         ret = test(sess, model, users_to_test, is_valid=False, drop_flag=True)
         # cur_best_pre_0 = ret['recall'][0]
 
-        final_perf = 'Best validation model \nrecall=[%s], precision=[%s], ndcg=[%s]"% \
-                         ('\t'.join(['%.5f' % r for r in ret['recall']]),
-                         '\t'.join(['%.5f' % r for r in ret['precision']]),
-                         '\t'.join(['%.5f' % r for r in ret['ndcg']]))
+        final_perf = "Best validation model\nrecall=[%s], precision=[%s], ndcg=[%s]" % \
+                     ('\t'.join(['%.5f' % r for r in ret['recall']]),
+                     '\t'.join(['%.5f' % r for r in ret['precision']]),
+                     '\t'.join(['%.5f' % r for r in ret['ndcg']]))
         print(final_perf)
 
     save_path = '%soutput/%s/%s.result' % (args.proj_path, args.dataset, model.model_type)
